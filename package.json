@@ -1,0 +1,29 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio site with blog",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "deploy": "turbo run deploy",
+    "dev": "turbo run dev --parallel",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lint": "turbo run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rosborne132/portfolio.git"
+  },
+  "license": "ISC",
+  "homepage": "https://github.com/rosborne132/portfolio#readme",
+  "workspaces": [
+    "studio/portfolio",
+    "web"
+  ],
+  "devDependencies": {
+    "eslint": "^8.17.0",
+    "eslint-config-custom": "^0.0.0",
+    "prettier": "^2.6.2",
+    "turbo": "latest"
+  }
+}

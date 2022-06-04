@@ -1,59 +1,62 @@
-import groq from 'groq'
-import imageUrlBuilder from '@sanity/image-url'
-import {PortableText} from '@portabletext/react'
-import client from '../../utils/client'
+import groq from "groq";
+import imageUrlBuilder from "@sanity/image-url";
+import { PortableText } from "@portabletext/react";
+import client from "../../utils/client";
 
 const urlFor = (source: any) => imageUrlBuilder(client).image(source);
 
 const ptComponents = {
-  types: {
-    image: ({ value }: { value: any }) => {
-      if (!value?.asset?._ref) return null
+    types: {
+        image: ({ value }: { value: any }) => {
+            if (!value?.asset?._ref) return null;
 
-      return (
-        <img
-          alt={value.alt || ' '}
-          loading="lazy"
-          src={urlFor(value).width(320).height(240).fit('max').auto('format')}
-        />
-      )
-    }
-  }
-}
+            const imageLink = urlFor(value)
+                .width(320)
+                .height(240)
+                .fit("max")
+                .auto("format") as unknown;
 
-const Post = ({post}: { post: any }) => {
-  const {
-    title = 'Missing title',
-    name = 'Missing name',
-    categories,
-    authorImage,
-    body = []
-  } = post
-  return (
-    <article>
-      <h1>{title}</h1>
-      <span>By {name}</span>
-      {categories && (
-        <ul>
-          Posted in
-          {categories.map((category: any) => <li key={category}>{category}</li>)}
-        </ul>
-      )}
-      {authorImage && (
-          <img
-            src={urlFor(authorImage)
-              .width(50)
-              .url()}
-            alt={`${name}'s picture`}
-          />
-      )}
-      <PortableText
-        value={body}
-        components={ptComponents}
-      />
-    </article>
-  )
-}
+            return (
+                <img
+                    alt={value.alt || " "}
+                    loading="lazy"
+                    src={imageLink as string}
+                />
+            );
+        },
+    },
+};
+
+const Post = ({ post }: { post: any }) => {
+    const {
+        title = "Missing title",
+        name = "Missing name",
+        categories,
+        authorImage,
+        body = [],
+    } = post;
+    return (
+        <article>
+            <h1>{title}</h1>
+            <span>By {name}</span>
+            {categories && (
+                <ul>
+                    Posted in
+                    {categories.map((category: any) => (
+                        <li key={category}>{category}</li>
+                    ))}
+                </ul>
+            )}
+            {authorImage && (
+                <img
+                    src={urlFor(authorImage).width(50).url()}
+                    alt={`${name}'s picture`}
+                />
+            )}
+            <PortableText value={body} components={ptComponents} />
+        </article>
+    );
+};
 
 const query = groq`*[_type == "post" && slug.current == $slug][0]{
   title,
@@ -61,29 +64,29 @@ const query = groq`*[_type == "post" && slug.current == $slug][0]{
   "categories": categories[]->title,
   "authorImage": author->image,
   body
-}`
+}`;
 
 export async function getStaticPaths() {
-  const paths = await client.fetch(
-    groq`*[_type == "post" && defined(slug.current)][].slug.current`
-  )
+    const paths = await client.fetch(
+        groq`*[_type == "post" && defined(slug.current)][].slug.current`
+    );
 
-  return {
-    paths: paths.map((slug: any) => ({params: {slug}})),
-    fallback: true,
-  }
+    return {
+        paths: paths.map((slug: any) => ({ params: { slug } })),
+        fallback: true,
+    };
 }
 
 export async function getStaticProps(context: any) {
-  // It's important to default the slug so that it doesn't return "undefined"
-  const { slug = "" } = context.params
-  const post = await client.fetch(query, { slug })
+    // It's important to default the slug so that it doesn't return "undefined"
+    const { slug = "" } = context.params;
+    const post = await client.fetch(query, { slug });
 
-  return {
-    props: {
-      post
-    }
-  }
+    return {
+        props: {
+            post,
+        },
+    };
 }
 
-export default Post
+export default Post;

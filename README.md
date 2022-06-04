@@ -32,7 +32,7 @@
 
 # Run Next.js in development mode
 ./web
-> npm run dev
+> yarn run dev
 ```
 
 ## Deploy on vercel
