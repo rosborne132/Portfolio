@@ -2,6 +2,7 @@ import groq from "groq";
 import imageUrlBuilder from "@sanity/image-url";
 import { PortableText } from "@portabletext/react";
 import client from "../../utils/client";
+import { Layout } from "../../components";
 
 const urlFor = (source: any) => imageUrlBuilder(client).image(source);
 
@@ -36,25 +37,31 @@ const Post = ({ post }: { post: any }) => {
         body = [],
     } = post;
     return (
-        <article>
-            <h1>{title}</h1>
-            <span>By {name}</span>
-            {categories && (
-                <ul>
-                    Posted in
-                    {categories.map((category: any) => (
-                        <li key={category}>{category}</li>
-                    ))}
-                </ul>
-            )}
-            {authorImage && (
-                <img
-                    src={urlFor(authorImage).width(50).url()}
-                    alt={`${name}'s picture`}
-                />
-            )}
-            <PortableText value={body} components={ptComponents} />
-        </article>
+        <Layout>
+            <article>
+                <h1>{title}</h1>
+                <span>By {name}</span>
+                {categories && (
+                    <ul>
+                        Posted in
+                        {categories.map((category: any) => (
+                            <li key={category}>{category}</li>
+                        ))}
+                    </ul>
+                )}
+                {authorImage && (
+                    <div className="avatar">
+                        <div className="w-24 rounded-xl">
+                            <img
+                                src={urlFor(authorImage).url()}
+                                alt={`${name}'s picture`}
+                            />
+                        </div>
+                    </div>
+                )}
+                <PortableText value={body} components={ptComponents} />
+            </article>
+        </Layout>
     );
 };
 

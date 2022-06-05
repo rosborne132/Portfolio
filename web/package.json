@@ -13,21 +13,23 @@
     "@portabletext/react": "^1.0.6",
     "@sanity/client": "^3.3.1",
     "@sanity/image-url": "^1.0.1",
+    "autoprefixer": "^10.4.7",
+    "daisyui": "^2.15.2",
     "grop": "^0.1.0",
     "groq": "^2.29.3",
     "next": "12.1.6",
+    "postcss": "^8.4.14",
     "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "react-dom": "18.1.0",
+    "tailwindcss": "^3.0.24"
   },
   "devDependencies": {
     "@types/node": "17.0.38",
     "@types/react": "18.0.10",
     "@types/react-dom": "18.0.5",
-    "autoprefixer": "^10.4.7",
     "eslint": "8.16.0",
     "eslint-config-next": "12.1.6",
-    "postcss": "^8.4.14",
-    "tailwindcss": "^3.0.24",
+    "react-icons": "^4.4.0",
     "typescript": "4.7.2"
   }
 }
