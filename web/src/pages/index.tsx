@@ -18,35 +18,30 @@ const Home = ({ posts }: { posts: any }) => {
                     <h2>Blog Posts</h2>
                 </header>
                 <div>
-                    {posts.length > 0 &&
+                    {posts.length &&
                         posts.map(
-                            ({
-                                _id,
-                                title = "",
-                                slug = "",
-                                publishedAt = "",
-                            }: {
-                                _id: any;
-                                title: string;
-                                slug: any;
-                                publishedAt: string;
-                            }) => {
-                                console.log("slug: ", slug);
+                            (post: any) => {
+                                console.log("post: ", post);
                                 return (
-                                    slug && (
-                                        <li key={_id}>
-                                            <Link
-                                                href="/post/[slug]"
-                                                as={`/post/${slug.current}`}
-                                            >
-                                                <a>{title}</a>
-                                            </Link>{" "}
-                                            (
-                                            {new Date(
-                                                publishedAt
-                                            ).toDateString()}
-                                            )
-                                        </li>
+                                    post.slug && (
+                                        // <li key={post._id}>
+                                        //     <Link
+                                        //         href={`/post/${post.slug.current}`}
+                                        //     >
+                                        //         <a>{post.title}</a>
+                                        //     </Link>
+                                        // </li>
+
+                                        <div className="card w-96 bg-base-100 shadow-xl">
+                                        <figure><img src="https://api.lorem.space/image/shoes?w=400&h=225" alt="Shoes" /></figure>
+                                        <div className="card-body">
+                                          <h2 className="card-title">{post.title}</h2>
+                                          <p>If a dog chews shoes whose shoes does he choose?</p>
+                                          <div className="card-actions justify-end">
+                                            <button className="btn btn-primary">read more</button>
+                                          </div>
+                                        </div>
+                                      </div>
                                     )
                                 );
                             }
