@@ -1,17 +1,58 @@
-import Link from "next/link";
 import groq from "groq";
 
-import { Layout } from "../components";
-import client from "../utils/client";
+import { Layout, PostCard } from "../components";
+import { client } from "../utils";
+import { Post } from "../types";
 
 const Home = ({ posts }: { posts: any }) => {
     return (
         <Layout>
             <header>
-                <h1 className="text-3xl font-bold">
-                    Welcome to <a href="https://nextjs.org">Next.js!</a>
-                </h1>
+                <h1 className="text-3xl font-bold">Rob Osborne</h1>
+                <p>Software Engineer in the Portland area.</p>
             </header>
+
+            <section>
+                <header>
+                    <h2>About</h2>
+                </header>
+                <p>
+                    I am a software engineer and I love listening to music while
+                    getting heads down in code. My current interests are in
+                    digital art and 3D.
+                </p>
+                <p>
+                    Outside of coding, I like to play guitar and make digital
+                    art. On rainy days I love to spend my time playing and
+                    taking apart video games. Much like code, I like to see how
+                    my favorite things work.
+                </p>
+            </section>
+
+            <section>
+                <header>
+                    <h2>Certifications</h2>
+                </header>
+                <p>See all of my current certifications! :)</p>
+
+                {/* TODO: Import old badge component */}
+                {/* Import from CMS */}
+                {/* <div>
+                    <Badge
+                        altTest="AWS Developer Cert"
+                        badgeLink="https://www.certmetrics.com/amazon/public/badge.aspx?i=2&t=c&d=2020-03-07&ci=AWS00487144"
+                        imgLink="https://d1.awsstatic.com/training-and-certification/Certification%20Badges/AWS-Certified_Developer_Associate_512x512.6d5f0ad35de66966c96f8e408e4fd919c1a2d753.png"
+                    />
+                </div> */}
+            </section>
+
+            <section>
+                <header>
+                    <h2>Projects</h2>
+                </header>
+                {/* Import from CMS */}
+                TBD
+            </section>
 
             <section>
                 <header>
@@ -20,31 +61,13 @@ const Home = ({ posts }: { posts: any }) => {
                 <div>
                     {posts.length &&
                         posts.map(
-                            (post: any) => {
-                                console.log("post: ", post);
-                                return (
-                                    post.slug && (
-                                        // <li key={post._id}>
-                                        //     <Link
-                                        //         href={`/post/${post.slug.current}`}
-                                        //     >
-                                        //         <a>{post.title}</a>
-                                        //     </Link>
-                                        // </li>
-
-                                        <div className="card w-96 bg-base-100 shadow-xl">
-                                        <figure><img src="https://api.lorem.space/image/shoes?w=400&h=225" alt="Shoes" /></figure>
-                                        <div className="card-body">
-                                          <h2 className="card-title">{post.title}</h2>
-                                          <p>If a dog chews shoes whose shoes does he choose?</p>
-                                          <div className="card-actions justify-end">
-                                            <button className="btn btn-primary">read more</button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    )
-                                );
-                            }
+                            (post: Post) =>
+                                post.slug && (
+                                    <PostCard
+                                        {...post}
+                                        key={post.slug.current}
+                                    />
+                                )
                         )}
                 </div>
             </section>

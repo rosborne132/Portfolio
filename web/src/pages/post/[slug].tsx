@@ -1,10 +1,10 @@
 import groq from "groq";
-import imageUrlBuilder from "@sanity/image-url";
+import Image from "next/image";
 import { PortableText } from "@portabletext/react";
-import client from "../../utils/client";
-import { Layout } from "../../components";
 
-const urlFor = (source: any) => imageUrlBuilder(client).image(source);
+import { client, urlFor } from "../../utils";
+import { Avatar, Layout } from "../../components";
+import { Post } from "../../types";
 
 const ptComponents = {
     types: {
@@ -18,7 +18,7 @@ const ptComponents = {
                 .auto("format") as unknown;
 
             return (
-                <img
+                <Image
                     alt={value.alt || " "}
                     loading="lazy"
                     src={imageLink as string}
@@ -28,38 +28,22 @@ const ptComponents = {
     },
 };
 
-const Post = ({ post }: { post: any }) => {
-    const {
-        title = "Missing title",
-        name = "Missing name",
-        categories,
-        authorImage,
-        body = [],
-    } = post;
+const Post = ({ post }: { post: Post }) => {
     return (
         <Layout>
-            <article>
-                <h1>{title}</h1>
-                <span>By {name}</span>
-                {categories && (
+            <article className="prose prose-zinc">
+                <h1>{post.title}</h1>
+                <span>By {post.name}</span>
+                {post.categories && (
                     <ul>
                         Posted in
-                        {categories.map((category: any) => (
+                        {post.categories.map((category: any) => (
                             <li key={category}>{category}</li>
                         ))}
                     </ul>
                 )}
-                {authorImage && (
-                    <div className="avatar">
-                        <div className="w-24 rounded-xl">
-                            <img
-                                src={urlFor(authorImage).url()}
-                                alt={`${name}'s picture`}
-                            />
-                        </div>
-                    </div>
-                )}
-                <PortableText value={body} components={ptComponents} />
+                {post.authorImage && <Avatar {...post} />}
+                <PortableText value={post.body} components={ptComponents} />
             </article>
         </Layout>
     );
@@ -80,12 +64,11 @@ export async function getStaticPaths() {
 
     return {
         paths: paths.map((slug: any) => ({ params: { slug } })),
-        fallback: true,
+        fallback: false,
     };
 }
 
 export async function getStaticProps(context: any) {
-    // It's important to default the slug so that it doesn't return "undefined"
     const { slug = "" } = context.params;
     const post = await client.fetch(query, { slug });
 
