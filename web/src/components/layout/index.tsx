@@ -22,7 +22,7 @@ export const Layout = ({ children }: Props) => (
             </Link>
         </div>
 
-        <main className="p-4 flex-grow bg-gray-200s">{children}</main>
+        <main className="flex-grow bg-gray-200s">{children}</main>
 
         <footer className="footer footer-center p-5 bg-primary text-primary-content">
             <IconContext.Provider value={{ color: "white", size: "2em" }}>
