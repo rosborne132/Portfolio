@@ -28,22 +28,80 @@ const ptComponents = {
     },
 };
 
+const Profile = (post: Post) => (
+    <div className="flex items-center mb-3 last:mb-0">
+        {post.authorImage && <Avatar {...post} />}
+        <div className="pl-3">
+            <span className="font-medium text-sm ml-1 block">{post.name}</span>
+        </div>
+    </div>
+);
+
+const Categories = (post: Post) => (
+    <>
+        {post.categories &&
+            post.categories.map((category: any) => (
+                <span
+                    className="p-1 px-3 mr-1 mb-1 inline-block text-xs font-mono rounded bg-green-200 text-green-800 hover:bg-blue-200 hover:text-blue-800 transition duration-300 ease-in-out"
+                    key={category}
+                >
+                    {category}
+                </span>
+            ))}
+    </>
+);
+
 const Post = ({ post }: { post: Post }) => {
     return (
         <Layout>
-            <article className="prose prose-zinc">
-                <h1>{post.title}</h1>
-                <span>By {post.name}</span>
-                {post.categories && (
-                    <ul>
-                        Posted in
-                        {post.categories.map((category: any) => (
-                            <li key={category}>{category}</li>
-                        ))}
-                    </ul>
-                )}
-                {post.authorImage && <Avatar {...post} />}
-                <PortableText value={post.body} components={ptComponents} />
+            <article className="container mx-auto px-6 md:px-4">
+                <div className="heading py-6 md:py-12 lg:w-10/12 md:text-center mx-auto">
+                    <h1 className="heading text-4xl md:text-6xl font-bold font-sans md:leading-tight">
+                        {post.title}
+                    </h1>
+                    <h2 className="text-xl text-gray-600 mt-2">
+                        {post.description}
+                    </h2>
+                </div>
+
+                <div className="flex flex-col pb-3 md:hidden">
+                    <Profile {...post} />
+                </div>
+
+                <Image
+                    src={urlFor(post.mainImage.asset).url()}
+                    alt={post.slug.current}
+                    width={1600}
+                    height={900}
+                />
+
+                <div className="flex flex-col md:flex-row py-6 md:py-12">
+                    <div className="w-full md:w-3/12 pr-3">
+                        <div className="hidden flex-col md:flex mb-3 md:mb-6">
+                            <Profile {...post} />
+                        </div>
+
+                        <div className="hidden md:block">
+                            <Categories {...post} />
+                        </div>
+                    </div>
+
+                    <div className="w-full md:w-9/12">
+                        <div className="prose prose-zinc">
+                            <PortableText
+                                value={post.body}
+                                components={ptComponents}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="py-6 mt-6 border-t-2 block md:hidden">
+                    <h3 className="text-sm font-medium mb-1">Categories</h3>
+                    <div>
+                        <Categories {...post} />
+                    </div>
+                </div>
             </article>
         </Layout>
     );
@@ -51,10 +109,13 @@ const Post = ({ post }: { post: Post }) => {
 
 const query = groq`*[_type == "post" && slug.current == $slug][0]{
   title,
+  description,
+  mainImage,
   "name": author->name,
   "categories": categories[]->title,
   "authorImage": author->image,
-  body
+  body,
+  slug
 }`;
 
 export async function getStaticPaths() {
