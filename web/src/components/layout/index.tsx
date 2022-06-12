@@ -16,11 +16,18 @@ export const Layout = ({ children }: Props) => (
             <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <div className="navbar bg-base-100 p-4">
-            <Link className="btn btn-ghost normal-case text-xl" href="/">
-                Portfolio
-            </Link>
-        </div>
+        <ul className="navbar bg-base-100 p-4">
+            <li>
+                <Link className="normal-case text-xl" href="/">
+                    Portfolio
+                </Link>
+            </li>
+            <li className="pl-4">
+                <Link className="normal-case text-xl" href="/posts">
+                    Blog
+                </Link>
+            </li>
+        </ul>
 
         <main className="flex-grow bg-gray-200s">{children}</main>
 

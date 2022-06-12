@@ -2,8 +2,8 @@ import groq from "groq";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
 
-import { client, urlFor } from "../../utils";
 import { Avatar, Layout } from "../../components";
+import { client, urlFor } from "../../utils";
 import { Post } from "../../types";
 
 const ptComponents = {
@@ -32,7 +32,7 @@ const Profile = (post: Post) => (
     <div className="flex items-center mb-3 last:mb-0">
         {post.authorImage && <Avatar {...post} />}
         <div className="pl-3">
-            <span className="font-medium text-sm ml-1 block">{post.name}</span>
+            <span className="font-medium text-md ml-1 block">{post.name}</span>
         </div>
     </div>
 );

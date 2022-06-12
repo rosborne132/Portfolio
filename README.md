@@ -1,6 +1,6 @@
 # Portfolio
 
-## Get started
+## Setup
 
 ```sh
 # Install the Sanity command line interface
@@ -22,17 +22,21 @@
 ./studio
 > sanity deploy
 
-# Insert the projectId and dataset name from Sanity in client.js
-./web
-> nano client.js
-
 # Install frontend dependencies
 ./web
-> npm install
+> yarn
+```
 
-# Run Next.js in development mode
-./web
-> yarn run dev
+## Running the app locally
+
+This project uses turborepo for local development and deployment.
+
+To start up this project, run the command below.
+
+```bash
+npm run dev
+# or
+yarn dev
 ```
 
 ## Deploy on vercel
