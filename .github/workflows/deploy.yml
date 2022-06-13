@@ -5,13 +5,19 @@ on:
     branches: [main]
 
 jobs:
-  sanity-deploy:
-    runs-on: ubuntu-18.04
-    name: Deploy Sanity
+  build:
+    name: Build and deploy site
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: sanity-io/github-action-sanity@v0.2-alpha
-        env:
-          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v1
         with:
-          args: deploy
+          node-version: 14
+      - run: npm install -g yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
+      - run: cd ./studio
+      - name: Deploy Sanity
+        run: |
+          set -e
+          SANITY_AUTH_TOKEN="${{ secrets.SANITY_AUTH_TOKEN }}" yarn sanity deploy
