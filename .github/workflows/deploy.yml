@@ -14,7 +14,6 @@ jobs:
         with:
           node-version: 14
       - run: npm install -g yarn
-      - run: cd ./studio
       - run: yarn install --frozen-lockfile
       - run: yarn build
       - uses: sanity-io/github-action-sanity@v0.2-alpha
