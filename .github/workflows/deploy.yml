@@ -17,7 +17,8 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: yarn build
       - run: cd ./studio
-      - name: Deploy Sanity
-        run: |
-          set -e
-          SANITY_AUTH_TOKEN="${{ secrets.SANITY_AUTH_TOKEN }}" yarn sanity deploy
+      - uses: sanity-io/github-action-sanity@v0.2-alpha
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+        with:
+          args: deploy
