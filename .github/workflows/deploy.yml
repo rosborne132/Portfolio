@@ -16,8 +16,3 @@ jobs:
       - run: npm install -g yarn
       - run: yarn install --frozen-lockfile
       - run: yarn build
-      - uses: sanity-io/github-action-sanity@v0.2-alpha
-        env:
-          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
-        with:
-          args: deploy
