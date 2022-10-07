@@ -19,7 +19,7 @@ export const PostCard = (post: Post) => (
             <div className="card-actions justify-end pt-3">
                 <a
                     className="btn btn-primary"
-                    href={`/post/${post.slug.current}`}
+                    href={`/posts/${post.slug.current}`}
                     rel="noreferrer"
                 >
                     read more

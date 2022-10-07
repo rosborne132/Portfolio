@@ -1,17 +1,17 @@
 {
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".next/**"
+      ]
     },
     "lint": {
       "outputs": []
     },
     "format": {
-      "outputs": []
-    },
-    "deploy": {
-      "dependsOn": ["build", "format", "lint"],
       "outputs": []
     },
     "dev": {
