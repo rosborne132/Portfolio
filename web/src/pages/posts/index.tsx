@@ -20,7 +20,7 @@ const Posts = ({ posts }: { posts: Post[] }) => (
         <div className="container mx-auto py-4">
             <section>
                 <div className="py-2 flex justify-center">
-                    <div className="grid grid-cols-1 md:grid-cols-6 md:gap-4">
+                    <div className="grid grid-col gap-5 md:grid-flow-col">
                         {posts.length &&
                             posts.map(
                                 (post: Post) =>
