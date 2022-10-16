@@ -1,6 +1,12 @@
-import { Layout } from "../components";
+import groq from "groq";
 
-const Home = () => (
+import { client } from "../utils";
+
+import { Badge, Layout } from "../components";
+
+import { Certification } from "../types";
+
+const Home = ({ certifications }: { certifications: Certification[] }) => (
     <Layout>
         <section className="bg-indigo-800 p-10">
             <div className="container mx-auto px-5">
@@ -44,8 +50,15 @@ const Home = () => (
                     </h2>
                 </header>
             </div>
-            {/* Import from CMS */}
-            <p className="text-center">Coming soon</p>
+
+            {certifications.map((cert: Certification) => (
+                <Badge
+                    altText={cert.title}
+                    badgeLink={cert.badgeLink}
+                    key={cert.title}
+                    imgLink={cert.imgLink}
+                />
+            ))}
         </section>
 
         <section className="p-10">
@@ -61,5 +74,17 @@ const Home = () => (
         </section>
     </Layout>
 );
+
+export async function getStaticProps() {
+    const certifications = await client.fetch(groq`
+    *[_type == "certifications"] | order(publishedAt desc)
+  `);
+
+    return {
+        props: {
+            certifications,
+        },
+    };
+}
 
 export default Home;
