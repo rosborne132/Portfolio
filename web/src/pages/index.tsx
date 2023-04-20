@@ -78,9 +78,10 @@ const Home = ({ certifications }: { certifications: Certification[] }) => (
 );
 
 export async function getStaticProps() {
-    const certifications = await client.fetch(groq`
-    *[_type == "certifications"] | order(publishedAt desc)
-  `);
+    const [certifications, projects] = await Promise.all([
+        await client.fetch(groq`*[_type == "certification"] | order(publishedAt desc)`),
+        await client.fetch(groq`*[_type == "project"] | order(publishedAt desc)`)
+    ]);
 
     return {
         props: {
