@@ -2,13 +2,13 @@ import groq from "groq";
 
 import { client } from "../utils";
 
-import { Badge, Layout } from "../components";
+import { Layout, ProjectCard } from "../components";
 
-import { Certification } from "../types";
+import { Project } from "../types";
 
 const padding = 'pb-20 pl-20 pr-20 pt-20';
 
-const Home = ({ certifications }: { certifications: Certification[] }) => (
+const Home = ({ projects }: { projects: Project[] }) => (
     <Layout>
         <section className={`hero bg-primary text-primary-content ${padding}`}>
             <div className="hero-content mx-auto px-5">
@@ -48,44 +48,31 @@ const Home = ({ certifications }: { certifications: Certification[] }) => (
             <div className="container mx-auto px-4">
                 <header>
                     <h2 className="text-2xl font-bold text-center py-2">
-                        Certifications
-                    </h2>
-                </header>
-            </div>
-
-            {certifications.map((cert: Certification) => (
-                <Badge
-                    altText={cert.title}
-                    badgeLink={cert.badgeLink}
-                    key={cert.title}
-                    imgLink={cert.imgLink}
-                />
-            ))}
-        </section>
-
-        <section className={padding}>
-            <div className="container mx-auto px-4">
-                <header>
-                    <h2 className="text-2xl font-bold text-center py-2">
                         Projects
                     </h2>
                 </header>
             </div>
-            {/* Import from CMS */}
-            <p className="text-center">Coming soon</p>
+
+            {projects.map(({ description, link, slug, title }) => (
+                <ProjectCard
+                    key={slug!.current}
+                    description={description}
+                    link={link}
+                    title={title}
+                />
+            ))}
         </section>
     </Layout>
 );
 
 export async function getStaticProps() {
-    const [certifications, projects] = await Promise.all([
-        await client.fetch(groq`*[_type == "certification"] | order(publishedAt desc)`),
+    const [projects] = await Promise.all([
         await client.fetch(groq`*[_type == "project"] | order(publishedAt desc)`)
     ]);
 
     return {
         props: {
-            certifications,
+            projects
         },
     };
 }

@@ -1,6 +1,6 @@
 export default {
-  name: 'certifications',
-  title: 'Certifications',
+  name: 'certification',
+  title: 'Certification',
   type: 'document',
   fields: [
     {
