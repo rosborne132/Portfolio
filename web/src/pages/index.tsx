@@ -6,10 +6,12 @@ import { Badge, Layout } from "../components";
 
 import { Certification } from "../types";
 
+const padding = 'pb-20 pl-20 pr-20 pt-20';
+
 const Home = ({ certifications }: { certifications: Certification[] }) => (
     <Layout>
-        <section className="bg-indigo-800 p-10">
-            <div className="container mx-auto px-5">
+        <section className={`hero bg-primary text-primary-content ${padding}`}>
+            <div className="hero-content mx-auto px-5">
                 <header className="flex items-center justify-center">
                     <div className="text-center">
                         <h1 className="text-3xl font-bold py-2">Rob Osborne</h1>
@@ -19,7 +21,7 @@ const Home = ({ certifications }: { certifications: Certification[] }) => (
             </div>
         </section>
 
-        <section className="p-10">
+        <section className={padding}>
             <div className="container mx-auto px-4">
                 <header>
                     <h2 className="text-2xl font-bold text-center py-2">
@@ -42,7 +44,7 @@ const Home = ({ certifications }: { certifications: Certification[] }) => (
             </p>
         </section>
 
-        <section className="p-10">
+        <section className={padding}>
             <div className="container mx-auto px-4">
                 <header>
                     <h2 className="text-2xl font-bold text-center py-2">
@@ -61,7 +63,7 @@ const Home = ({ certifications }: { certifications: Certification[] }) => (
             ))}
         </section>
 
-        <section className="p-10">
+        <section className={padding}>
             <div className="container mx-auto px-4">
                 <header>
                     <h2 className="text-2xl font-bold text-center py-2">

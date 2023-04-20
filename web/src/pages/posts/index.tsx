@@ -6,8 +6,8 @@ import { Post } from "../../types";
 
 const Posts = ({ posts }: { posts: Post[] }) => (
     <Layout>
-        <section className="bg-indigo-800 p-10">
-            <div className="container mx-auto px-5">
+        <section className="hero bg-primary text-primary-content p-10">
+            <div className="hero-content container mx-auto px-5">
                 <header className="flex items-center justify-center">
                     <div className="text-center">
                         <h1 className="text-3xl font-bold py-2">Blog Posts</h1>
